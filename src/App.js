@@ -75,14 +75,20 @@ class App extends Component {
   };
 
   unFlipCards = (card1Index, card2Index) => {
-    console.log('unflipping');
     const { deck } = this.state;
-    const newDeck = deck.map(card => {
-      return { ...card };
+    const card1 = { ...deck[card1Index] };
+    const card2 = { ...deck[card2Index] };
+    card1.isFlipped = false;
+    card2.isFlipped = false;
+    const newDeck = deck.map((card, index) => {
+      if (card1Index === index) {
+        return card1;
+      }
+      if (card2Index === index) {
+        return card2;
+      }
+      return card;
     });
-
-    newDeck[card1Index].isFlipped = false;
-    newDeck[card2Index].isFlipped = false;
 
     this.setState({
       deck: newDeck
